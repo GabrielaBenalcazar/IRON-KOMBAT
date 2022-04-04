@@ -7,11 +7,13 @@ class Character {
 
         this.imageInstance = undefined;
 
+        this.floor = gameSie.h;
+
         this.chaPos = { x: 350, y: 350 };
         this.chaSize = { w: 350, h: 350 };
 
         this.vel = { x: 40, y: 160 };
-        this.gravity = { x: 0, y:4 };
+        this.gravity = { x: 0, y: 4 };
         this.dFrames = 0.4;
 
         this.init();
@@ -27,12 +29,12 @@ class Character {
             this.chaPos.x += this.vel.x;
         } else this.chaPos.x = this.gameSize.w - this.chaSize.w;
     }
+    moveDown() {}
     jump() {
-        this.chaPos.y -= this.vel.y
-        this.chaPosY ;
-        
-
-        // this.chaPos.x += this.vel.x;
+        this.chaPos.y -= this.vel.y;
+        if (this.chaPos.y < this.floor) {
+            this.chaPos.y += thi;
+        }
     }
 }
 class German extends Character {
@@ -51,6 +53,7 @@ class German extends Character {
             this.chaSize.w,
             this.chaSize.h
         );
+        // this.moveDown()
     }
 
     atackGer1() {
