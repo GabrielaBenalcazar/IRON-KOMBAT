@@ -17,22 +17,30 @@ const controlledApp = {
     ctx: undefined,
     gameSize: { w: undefined, h: undefined },
     character: undefined,
-    //key: , //PARA PONER LAS TECLAS
+    powUp: [],
+    framesIndex: 0,
+
+
     init(canvasID) {
         this.canvasNode = document.querySelector(`#${canvasID}`);
         this.ctx = this.canvasNode.getContext("2d");
-        console.log("l contexto", this.ctx);
+        //console.log("el contexto", this.ctx);
         this.setDimensions();
         this.createAll();
         this.setEventListeners();
+        this.drawAll();
         this.start();
     },
+
+
     setDimensions() {
         this.gameSize = {
             w: 1800,
             h: 700,
         };
     },
+
+
     // CONTROLES TECLAS
     setEventListeners() {
         document.onkeydown = (event) => {
@@ -53,6 +61,17 @@ const controlledApp = {
 
         
     },
+
+    //     document.addEventListener("keydown", (e) => {
+    //         switch (e.code) {
+    //             case 32:
+    //                 if (his.chaPos.y) {
+    //                     this.jump();
+    //                 }
+    //         }
+    //     });
+    // })
+
     // PREGUNTAR TAs
     // if (key === ‘a’) {
     //     this.character.attackA()
@@ -63,35 +82,73 @@ const controlledApp = {
     // if (key === ‘d’) {
     //     this.character.attackD()
     // }
-    //EL CORAZÓN
-    start() {
-        setInterval(() => {
-            this.clearAll();
-            this.drawAll();
-        }, 30);
-    },
-    // CREATE
-    createAll() {
-        this.createCharacter();
-        this.createImpostor();
-    },
-    createCharacter() {
-        this.character = new German(this.ctx, this.gameSize);
-        //console.log(this.character)
-    },
-    createImpostor() {
-        this.impostor = new Impostor(this.ctx, this.gameSize);
-        //console.log(this.impostor)
-    },
-    // createBall(){
-    // },
-    // createPowerUp(){
-    // },
+
     // DRAW
     drawAll() {
         this.character.draw();
         this.impostor.draw();
+        this.drawPowUp();
     },
+
+
+    //EL CORAZÓN
+    start() {
+        setInterval(() => {
+            this.clearAll();
+            this.movePowUp();
+            this.drawAll();
+            this.checkFrames();
+            this.drawAll();
+
+            this.framesIndex++;
+
+        }, 30);
+    },
+
+
+    // CREATE
+    createAll() {
+        this.createCharacter();
+        this.createImpostor();
+        this.createPowUp();
+    },
+    createCharacter() {
+        this.character = new German(this.ctx, this.gameSize);
+    },
+    createImpostor() {
+        this.impostor = new Impostor(this.ctx, this.gameSize);
+    },
+
+
+    // POWER UPS
+    createPowUp() {
+        this.powUp.push(new PowerUps(this.ctx, this.gameSize, 20));
+    },
+
+    movePowUp() {
+        this.powUp.forEach((element) => {
+            element.move();
+        });
+    },
+
+    checkFrames() {
+        if (this.framesIndex % 60 === 0) {
+            this.createPowUp();
+        }
+    },
+
+    drawPowUp() {
+        this.powUp.forEach((element) => {
+            element.drawRandomPowUp();
+        });
+    },
+
+    generateRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    },
+
+
+
     // CLEAR
     clearAll() {
         this.ctx.clearRect(0, 0, this.gameSize.w, this.gameSize.h);
