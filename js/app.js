@@ -20,7 +20,6 @@ const controlledApp = {
     powUp: [],
     framesIndex: 0,
 
-
     init(canvasID) {
         this.canvasNode = document.querySelector(`#${canvasID}`);
         this.ctx = this.canvasNode.getContext("2d");
@@ -28,10 +27,8 @@ const controlledApp = {
         this.setDimensions();
         this.createAll();
         this.setEventListeners();
-        this.drawAll();
         this.start();
     },
-
 
     setDimensions() {
         this.gameSize = {
@@ -39,7 +36,6 @@ const controlledApp = {
             h: 700,
         };
     },
-
 
     // CONTROLES TECLAS
     setEventListeners() {
@@ -54,40 +50,8 @@ const controlledApp = {
 
             if (key == "w") {
                 this.character.jump();
-
-                console.log("popino");
             }
         };
-
-        
-    },
-
-    //     document.addEventListener("keydown", (e) => {
-    //         switch (e.code) {
-    //             case 32:
-    //                 if (his.chaPos.y) {
-    //                     this.jump();
-    //                 }
-    //         }
-    //     });
-    // })
-
-    // PREGUNTAR TAs
-    // if (key === ‘a’) {
-    //     this.character.attackA()
-    // }
-    // if (key === ‘s’) {
-    //     this.character.attackS()
-    // }
-    // if (key === ‘d’) {
-    //     this.character.attackD()
-    // }
-
-    // DRAW
-    drawAll() {
-        this.character.draw();
-        this.impostor.draw();
-        this.drawPowUp();
     },
 
 
@@ -96,15 +60,12 @@ const controlledApp = {
         setInterval(() => {
             this.clearAll();
             this.movePowUp();
-            this.drawAll();
             this.checkFrames();
             this.drawAll();
 
             this.framesIndex++;
-
         }, 30);
     },
-
 
     // CREATE
     createAll() {
@@ -119,10 +80,9 @@ const controlledApp = {
         this.impostor = new Impostor(this.ctx, this.gameSize);
     },
 
-
     // POWER UPS
     createPowUp() {
-        this.powUp.push(new PowerUps(this.ctx, this.gameSize, 20));
+        this.powUp.push(new PowerUps(this.ctx, this.gameSize, 10));
     },
 
     movePowUp() {
@@ -132,11 +92,17 @@ const controlledApp = {
     },
 
     checkFrames() {
-        if (this.framesIndex % 60 === 0) {
+        if (this.framesIndex % 200 === 0) {
             this.createPowUp();
         }
     },
+    // DRAW
 
+    drawAll() {
+        this.character.draw();
+        this.impostor.draw();
+        this.drawPowUp();
+    },
     drawPowUp() {
         this.powUp.forEach((element) => {
             element.drawRandomPowUp();
@@ -146,8 +112,21 @@ const controlledApp = {
     generateRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min) + min);
     },
+    //COLLISIONS
+
+//     var rect1 = {this.character.chaPos.x: 5, y: 5, width: 50, height: 50}
+// var rect2 = { x: 20, y: 10, width: 10, height: 10 }
 
 
+//     this.chaPos = { x: this.gameSize.w / 4, y: this.gameSize.h / 2 };
+//         this.chaSize = { w: this.gameSize.w / 5, h: this.gameSize.h / 2 }
+
+//     if (rect1.x < rect2.x + rect2.width &&
+//    rect1.x + rect1.width > rect2.x &&
+//    rect1.y < rect2.y + rect2.height &&
+//    rect1.height + rect1.y > rect2.y) {
+    // ¡colision detectada!
+// }
 
     // CLEAR
     clearAll() {

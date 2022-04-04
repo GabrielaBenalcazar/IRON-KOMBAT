@@ -2,12 +2,15 @@ class PowerUps {
     constructor(ctx, gameSize, speed) {
         this.ctx = ctx;
         this.gameSize = gameSize;
-        this.powUpSize = { w: this.generateRandomInt(100, 200), h: 20 };
+        this.powUpSize = { w: this.generateRandomInt(60, 60), h: 60 };
         this.powUpPos = {
-            x: this.generateRandomInt(25, this.gameSize.w - this.powUpSize.w - 25),
+            x: this.generateRandomInt(
+                20,
+                this.gameSize.w - this.powUpSize.w - 900
+            ),
             y: 0,
         };
-        this.speed = speed
+        this.speed = speed;
 
         this.init();
     }
@@ -33,6 +36,5 @@ class PowerUps {
 
     move() {
         this.powUpPos.y += this.speed;
-
     }
 }

@@ -7,14 +7,13 @@ class Character {
 
         this.imageInstance = undefined;
 
-        this.floor = gameSie.h;
+        this.floor = this.gameSize.h;
 
-        this.chaPos = { x: 350, y: 350 };
-        this.chaSize = { w: 350, h: 350 };
+        this.chaPos = { x: this.gameSize.w / 4, y: this.gameSize.h / 2 };
+        this.chaSize = { w: this.gameSize.w / 5, h: this.gameSize.h / 2 };
 
         this.vel = { x: 40, y: 160 };
-        this.gravity = { x: 0, y: 4 };
-        this.dFrames = 0.4;
+        this.gravity = 0.4;
 
         this.init();
     }
@@ -29,11 +28,18 @@ class Character {
             this.chaPos.x += this.vel.x;
         } else this.chaPos.x = this.gameSize.w - this.chaSize.w;
     }
-    moveDown() {}
+    moveDown() {
+        if (this.chaPos.y + this.chaSize.h >= this.floor) {
+            this.chaPos.y += 100;
+            console.log("ESTAMOS EN EL SUELO");
+        } else {
+            console.log("SALTANDOOOO");
+        }
+    }
     jump() {
         this.chaPos.y -= this.vel.y;
-        if (this.chaPos.y < this.floor) {
-            this.chaPos.y += thi;
+        if (this.chaPos.y + this.chaSize.h <= this.floor) {
+            this.moveDown();
         }
     }
 }
