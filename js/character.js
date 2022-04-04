@@ -8,16 +8,20 @@ class Character {
         this.imageInstance = undefined;
 
         this.floor = this.gameSize.h;
-
-        this.chaPos = { x: this.gameSize.w / 4, y: this.gameSize.h / 2 };
+        this.posUp = 0;
         this.chaSize = { w: this.gameSize.w / 5, h: this.gameSize.h / 2 };
 
-        this.vel = { x: 40, y: 160 };
-        this.gravity = 0.4;
+        this.chaPos = {
+            x: this.gameSize.w / 4 - this.chaSize.w / 2,
+            y: this.gameSize.h / 2,
+        };
+
+        this.vel = { x: 40, y: 250 };
+        this.gravity = 2;
 
         this.init();
     }
-
+    // AVISAR A MARIA QUE LOS MOVIMIENTOS VAN POR FUERA DE GERMAN
     moveLeft() {
         if (this.chaPos.x > 0) {
             this.chaPos.x -= this.vel.x;
@@ -28,21 +32,21 @@ class Character {
             this.chaPos.x += this.vel.x;
         } else this.chaPos.x = this.gameSize.w - this.chaSize.w;
     }
-    moveDown() {
-        if (this.chaPos.y + this.chaSize.h >= this.floor) {
-            this.chaPos.y += 100;
-            console.log("ESTAMOS EN EL SUELO");
-        } else {
-            console.log("SALTANDOOOO");
-        }
-    }
+
     jump() {
         this.chaPos.y -= this.vel.y;
-        if (this.chaPos.y + this.chaSize.h <= this.floor) {
-            this.moveDown();
+        this.vel.y = 0;
+    }
+    jumpDown() {
+        if (this.chaPos.y + this.chaSize.h < this.floor) {
+            this.vel.y += this.gravity;
+            this.chaPos.y += this.vel.y;
+        } else {
+            this.vel.y = 250;
         }
     }
 }
+
 class German extends Character {
     constructor(ctx, gameSize) {
         super(ctx, gameSize);
@@ -52,6 +56,13 @@ class German extends Character {
         this.imageInstance.src = "/img/goku.png";
     }
     draw() {
+        this.ctx.fillStyle = "orange";
+        this.ctx.fillRect(
+            this.chaPos.x,
+            this.chaPos.y,
+            this.chaSize.w,
+            this.chaSize.h
+        );
         this.ctx.drawImage(
             this.imageInstance,
             this.chaPos.x,
@@ -59,6 +70,7 @@ class German extends Character {
             this.chaSize.w,
             this.chaSize.h
         );
+
         // this.moveDown()
     }
 

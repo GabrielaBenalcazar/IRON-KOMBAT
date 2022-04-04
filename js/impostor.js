@@ -2,14 +2,25 @@ class Impostor {
     constructor(ctx, gameSize) {
         this.ctx = ctx;
         this.gameSize = gameSize;
+
         this.life = 100;
+
         this.imageInstance = undefined;
-        this.chaPos = { x: 1000, y: 350 };
-        this.chaSize = { w: 350, h: 350 };
-        // this.imPosY0 = this.imPos.y //PARA HACERLE DISPARAR
+
+        this.floor = this.gameSize.h;
+        this.posUp = 0;
+
+        this.imPos = {
+            x: this.gameSize.w - this.gameSize.w / 4,
+            y: this.gameSize.h / 2,
+        };
+        this.imSize = { w: this.gameSize.w / 5, h: this.gameSize.h / 2 };
+
+        this.vel = { x: 100, y: 160 };
+        this.gravity = 0.4;
 
         // this.bullets = [];   //LAS BALAS
-        // this.setListeners();  // PARA QUE DISPARE
+
         this.init();
     }
     init() {
@@ -17,15 +28,47 @@ class Impostor {
         this.imageInstance.src = "../img/goku2.png";
     }
     draw() {
+        this.ctx.fillStyle = "green";
+        this.ctx.fillRect(
+            this.imPos.x,
+            this.imPos.y,
+            this.imSize.w,
+            this.imSize.h
+        );
         this.ctx.drawImage(
             this.imageInstance,
-            this.chaPos.x,
-            this.chaPos.y,
-            this.chaSize.w,
-            this.chaSize.h
+            this.imPos.x,
+            this.imPos.y,
+            this.imSize.w,
+            this.imSize.h
             // this.bullets.forEach(bullet => bullet.draw()),  //LAS BALAS
             // this.clearBullets()
         );
+    }
+
+    moveLeft() {
+        if (this.imPos.x > this.gameSize.w / 2) {
+            this.imPos.x -= this.vel.x;
+        } else {
+            this.imPos.x = this.gameSize.w / 2;
+        }
+    }
+    moveRight() {
+        if (this.imPos.x + this.vel.x <= this.gameSize.w - this.imSize.w) {
+            this.imPos.x += this.vel.x;
+        } else this.imPos.x = this.gameSize.w - this.imSize.w;
+    }
+
+    randomMove() {
+        let ranNum = Math.random();
+
+        // console.log(ranNum);
+        if (ranNum <= 4 / 7) {
+            this.moveLeft();
+        }
+        if (ranNum > 5 / 7) {
+            this.moveRight();
+        }
     }
 
     // shoot() {                                    // DISPARAR
@@ -44,20 +87,5 @@ class Impostor {
     //             this.shoot();
     //         }
     //     });
-    // }
-
-
-
-    // moveLeft() {
-    //     if (this.carPos.x > 0) {
-    //         this.carPos.x -= 10;
-    //     } else
-    //         this.carPos.x = 0
-    // }
-    // moveRight() {
-    //     if (this.carPos.x <= this.gameSize.w - this.carSize.w) {
-    //         this.carPos.x += 10;
-    //     } else
-    //         this.carPos.x = this.gameSize.w - this.carSize.w;
     // }
 }

@@ -18,6 +18,7 @@ const controlledApp = {
     gameSize: { w: undefined, h: undefined },
     character: undefined,
     powUp: [],
+    // bullets: [],
     framesIndex: 0,
 
     init(canvasID) {
@@ -48,12 +49,11 @@ const controlledApp = {
                 this.character.moveRight();
             }
 
-            if (key == "w") {
+            if (key == "ArrowUp") {
                 this.character.jump();
             }
         };
     },
-
 
     //EL CORAZÓN
     start() {
@@ -71,7 +71,8 @@ const controlledApp = {
     createAll() {
         this.createCharacter();
         this.createImpostor();
-        this.createPowUp();
+        
+        // this.createBullets()
     },
     createCharacter() {
         this.character = new German(this.ctx, this.gameSize);
@@ -90,18 +91,26 @@ const controlledApp = {
             element.move();
         });
     },
-
     checkFrames() {
         if (this.framesIndex % 200 === 0) {
             this.createPowUp();
+        }
+        if (this.framesIndex % 10 === 0) {
+            this.impostor.randomMove();
+        }
+        if (this.framesIndex % 1 === 0) {
+            this.character.jumpDown();
         }
     },
     // DRAW
 
     drawAll() {
+        this.drawRoad();
+        this.drawRoad2();
         this.character.draw();
         this.impostor.draw();
         this.drawPowUp();
+        // this.drawBullets()
     },
     drawPowUp() {
         this.powUp.forEach((element) => {
@@ -112,24 +121,41 @@ const controlledApp = {
     generateRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min) + min);
     },
+
+    drawRoad() {
+        this.ctx.fillStyle = "red";
+        this.ctx.fillRect(0, 0, this.gameSize.w / 2, this.gameSize.h);
+    },
+    drawRoad2() {
+        this.ctx.fillStyle = "grey";
+        this.ctx.fillRect(
+            this.gameSize.w / 2,
+            0,
+            this.gameSize.w / 2,
+            this.gameSize.h
+        );
+    },
+
+    //JUMP
+
+    //BULLETS
+
+    // createBullets() {
+    //     this.bullets.push(new Bullets(this.ctx, this.gameSize, 10));
+    // },
+    // drawBullets() {
+    //     this.bullets.forEach((element) => {
+    //         element.draw();
+    //     });
+    // },
+
     //COLLISIONS
-
-//     var rect1 = {this.character.chaPos.x: 5, y: 5, width: 50, height: 50}
-// var rect2 = { x: 20, y: 10, width: 10, height: 10 }
-
-
-//     this.chaPos = { x: this.gameSize.w / 4, y: this.gameSize.h / 2 };
-//         this.chaSize = { w: this.gameSize.w / 5, h: this.gameSize.h / 2 }
-
-//     if (rect1.x < rect2.x + rect2.width &&
-//    rect1.x + rect1.width > rect2.x &&
-//    rect1.y < rect2.y + rect2.height &&
-//    rect1.height + rect1.y > rect2.y) {
-    // ¡colision detectada!
-// }
 
     // CLEAR
     clearAll() {
         this.ctx.clearRect(0, 0, this.gameSize.w, this.gameSize.h);
     },
+
+    //CLEAR POWEUPS
+    //CLEAR BULLETS
 };
