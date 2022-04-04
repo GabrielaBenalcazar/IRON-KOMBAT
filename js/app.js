@@ -8,7 +8,6 @@ window.onload = () => {
 };
 
 const controlledApp = {
-    
     name: "IRON KOMBAT",
     description: "Fighting game",
     version: "1.0.0",
@@ -36,7 +35,7 @@ const controlledApp = {
     },
     // CONTROLES TECLAS
     setEventListeners() {
-        (document.onkeydown = (event) => {
+        document.onkeydown = (event) => {
             const { key } = event;
             if (key === "ArrowLeft") {
                 this.character.moveLeft();
@@ -44,15 +43,15 @@ const controlledApp = {
             if (key === "ArrowRight") {
                 this.character.moveRight();
             }
-        }),
-            document.addEventListener("keydown", (e) => {
-                switch (e.code) {
-                    case 32:
-                        if (his.chaPos.y) {
-                            this.jump();
-                        }
-                }
-            });
+
+            if (key == "w") {
+                this.character.jump();
+
+                console.log("popino");
+            }
+        };
+
+        
     },
     // PREGUNTAR TAs
     // if (key === ‘a’) {
