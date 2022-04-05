@@ -2,7 +2,7 @@ class Character {
     constructor(ctx, gameSize, canMove) {
         this.ctx = ctx;
         this.gameSize = gameSize;
-        this.canMove = canMove
+        this.canMove = canMove;
 
         this.life = 100;
 
@@ -23,19 +23,20 @@ class Character {
         this.init();
     }
     // AVISAR A MARIA QUE LOS MOVIMIENTOS VAN POR FUERA DE GERMAN
-    dontMove() {
-        
-    }
-    
+
     moveLeft() {
         if (this.chaPos.x > 0) {
             this.chaPos.x -= this.vel.x;
         } else this.chaPos.x = 0;
     }
     moveRight() {
-        if (this.chaPos.x <= this.gameSize.w - this.chaSize.w) {
-            this.chaPos.x += this.vel.x;
-        } else this.chaPos.x = this.gameSize.w - this.chaSize.w;
+        if (this.canMove === false) {
+            this.chaPos += 0;
+        } else if (this.canMove === true) {
+            if (this.chaPos.x <= this.gameSize.w - this.chaSize.w) {
+                this.chaPos.x += this.vel.x;
+            } else this.chaPos.x = this.gameSize.w - this.chaSize.w;
+        }
     }
 
     jump() {

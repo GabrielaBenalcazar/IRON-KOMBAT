@@ -160,9 +160,12 @@ const controlledApp = {
             this.character.chaPos.x + this.character.chaSize.w >
             this.impostor.imPos.x
         ) {
-            this.canMove = true
+            console.log("atack")
+            this.canMove = false
 
-        }
+        } else
+            this.canMove = true
+            
 
         //         if (rect1.x < rect2.x + rect2.width &&
         //    rect1.x + rect1.width > rect2.x &&
@@ -173,7 +176,7 @@ const controlledApp = {
     },
 
 
-    
+
 
     // CLEAR
     clearAll() {
