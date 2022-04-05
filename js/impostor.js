@@ -1,14 +1,12 @@
 class Impostor {
-    constructor(ctx, gameSize) {
+    constructor(ctx, gameSize, chaSize, chaPos) {
         this.ctx = ctx;
+
         this.gameSize = gameSize;
 
         this.life = 100;
 
         this.imageInstance = undefined;
-
-        this.floor = this.gameSize.h;
-        this.posUp = 0;
 
         this.imPos = {
             x: this.gameSize.w - this.gameSize.w / 4,
@@ -47,45 +45,16 @@ class Impostor {
     }
 
     moveLeft() {
-        if (this.imPos.x > this.gameSize.w / 2) {
-            this.imPos.x -= this.vel.x;
-        } else {
-            this.imPos.x = this.gameSize.w / 2;
-        }
+        // if (this.imPos.x > this.gameSize.w / 2) {
+        this.imPos.x -= this.vel.x;
     }
+    // } else {
+    //     this.imPos.x = this.gameSize.w / 2;
+    // }
+
     moveRight() {
         if (this.imPos.x + this.vel.x <= this.gameSize.w - this.imSize.w) {
             this.imPos.x += this.vel.x;
         } else this.imPos.x = this.gameSize.w - this.imSize.w;
     }
-
-    randomMove() {
-        let ranNum = Math.random();
-
-        // console.log(ranNum);
-        if (ranNum <= 4 / 7) {
-            this.moveLeft();
-        }
-        if (ranNum > 5 / 7) {
-            this.moveRight();
-        }
-    }
-
-    // shoot() {                                    // DISPARAR
-    //     this.bullets.push(new Bullets(this.ctx, this.imPos.x, this.imPos.y, this.imPosY0, this.width, this.height));
-    // }
-
-    // clearBullets() {                            // LIMPIAR LAS BALAS
-    //     this.bullets = this.bullets.filter(bull => bull.imPos.x <= this.gameSize.w)
-    // }
-
-    // setListeners() {            //PARA QUE DISPARE
-
-    //     document.addEventListener("keydown", e => {
-
-    //         if (this.keys.SPACE) {
-    //             this.shoot();
-    //         }
-    //     });
-    // }
 }

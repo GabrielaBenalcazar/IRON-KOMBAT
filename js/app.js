@@ -22,7 +22,7 @@ const controlledApp = {
     // bullets: [],
     framesIndex: 0,
 
-    canMove: undefined,
+    collision: undefined,
 
     init(canvasID) {
         this.canvasNode = document.querySelector(`#${canvasID}`);
@@ -49,7 +49,7 @@ const controlledApp = {
                 this.character.moveLeft();
             }
             if (key === "ArrowRight") {
-                this.character.moveRight();
+                this.move();
             }
 
             if (key == "ArrowUp") {
@@ -82,7 +82,12 @@ const controlledApp = {
         this.character = new German(this.ctx, this.gameSize);
     },
     createImpostor() {
-        this.impostor = new Impostor(this.ctx, this.gameSize);
+        this.impostor = new Impostor(
+            this.ctx,
+            this.gameSize,
+            this.character.chaPos.x,
+            this.character.chaSize.w
+        );
     },
 
     // POWER UPS
@@ -100,7 +105,7 @@ const controlledApp = {
             this.createPowUp();
         }
         if (this.framesIndex % 10 === 0) {
-            this.impostor.randomMove();
+            this.randomMove();
         }
         if (this.framesIndex % 1 === 0) {
             this.character.jumpDown();
@@ -141,16 +146,40 @@ const controlledApp = {
         );
     },
 
-    //BULLETS
+    //  MOVE
 
-    // createBullets() {
-    //     this.bullets.push(new Bullets(this.ctx, this.gameSize, 10));
-    // },
-    // drawBullets() {
-    //     this.bullets.forEach((element) => {
-    //         element.draw();
-    //     });
-    // },
+    randomMove() {
+        let ranNum = Math.random();
+
+        // console.log(ranNum);
+        if (ranNum <= 4 / 7) {
+            if (
+                this.impostor.imPos.x >
+                this.character.chaPos.x + this.character.chaSize.w
+            ) {
+                this.impostor.moveLeft();
+            }
+        }
+        if (ranNum > 5 / 7) {
+            this.impostor.moveRight();
+        }
+    },
+
+    move() {
+        if (
+            this.character.chaPos.x + this.character.chaSize.w <=
+            this.impostor.imPos.x
+        ) {
+            console.log("note muevas!!!!!!!!");
+            this.character.moveRight();
+        }
+
+        // if (
+        //     this.impostor.imPos.x >= this.character.chaPos.x + this.character.chaSize.w ) {
+        //     console.log("note muevas IMPOS!!!!!!!!");
+        //     this.Impostor.moveLeft();
+        // }
+    },
 
     //COLLISIONS
 
@@ -160,23 +189,10 @@ const controlledApp = {
             this.character.chaPos.x + this.character.chaSize.w >
             this.impostor.imPos.x
         ) {
-            console.log("atack")
-            this.canMove = false
-
-        } else
-            this.canMove = true
-            
-
-        //         if (rect1.x < rect2.x + rect2.width &&
-        //    rect1.x + rect1.width > rect2.x &&
-        //    rect1.y < rect2.y + rect2.height &&
-        //    rect1.height + rect1.y > rect2.y) {
-        //     // ¡colision detectada!
-        // }
+            console.log("atack");
+            // this.collision = true;
+        }
     },
-
-
-
 
     // CLEAR
     clearAll() {

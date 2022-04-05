@@ -1,21 +1,17 @@
 class Character {
-    constructor(ctx, gameSize, canMove) {
+    constructor(ctx, gameSize, collision) {
         this.ctx = ctx;
         this.gameSize = gameSize;
-        this.canMove = canMove;
+        
 
         this.life = 100;
 
         this.imageInstance = undefined;
 
         this.floor = this.gameSize.h;
-        this.posUp = 0;
+        
         this.chaSize = { w: this.gameSize.w / 5, h: this.gameSize.h / 2 };
-
-        this.chaPos = {
-            x: this.gameSize.w / 4 - this.chaSize.w / 2,
-            y: this.gameSize.h / 2,
-        };
+        this.chaPos = {x: this.gameSize.w / 4 ,y: this.gameSize.h / 2,};
 
         this.vel = { x: 40, y: 250 };
         this.gravity = 2;
@@ -30,13 +26,9 @@ class Character {
         } else this.chaPos.x = 0;
     }
     moveRight() {
-        if (this.canMove === false) {
-            this.chaPos += 0;
-        } else if (this.canMove === true) {
-            if (this.chaPos.x <= this.gameSize.w - this.chaSize.w) {
-                this.chaPos.x += this.vel.x;
-            } else this.chaPos.x = this.gameSize.w - this.chaSize.w;
-        }
+        // if (this.chaPos.x <= this.gameSize.w - this.chaSize.w) {
+            this.chaPos.x += this.vel.x;
+        // } else this.chaPos.x = this.gameSize.w - this.chaSize.w;
     }
 
     jump() {
