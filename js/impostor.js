@@ -17,7 +17,10 @@ class Impostor {
         this.vel = { x: 100, y: 160 };
         this.gravity = 0.4;
 
-        // this.bullets = [];   //LAS BALAS
+        //balas
+        this.bullets = [];
+
+    
 
         this.init();
     }
@@ -26,22 +29,31 @@ class Impostor {
         this.imageInstance.src = "../img/goku2.png";
     }
     draw() {
-        this.ctx.fillStyle = "green";
-        this.ctx.fillRect(
-            this.imPos.x,
-            this.imPos.y,
-            this.imSize.w,
-            this.imSize.h
-        );
+        
         this.ctx.drawImage(
             this.imageInstance,
             this.imPos.x,
             this.imPos.y,
             this.imSize.w,
             this.imSize.h
-            // this.bullets.forEach(bullet => bullet.draw()),  //LAS BALAS
-            // this.clearBullets()
+            
         );
+        
+        this.bullets.forEach(bullet => bullet.draw())
+    }
+
+    shoot() {
+        this.bullets.push(
+            new Bullets(
+                this.ctx,
+                this.gameSize,
+                this.imPos.x,
+                this.imPos.y,
+                this.imSize.w,
+                this.imSize.h
+            )
+        );
+        console.log("DISPARAAAAAAA");
     }
 
     moveLeft() {

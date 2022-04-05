@@ -2,19 +2,18 @@ class Character {
     constructor(ctx, gameSize, collision) {
         this.ctx = ctx;
         this.gameSize = gameSize;
-        
 
         this.life = 100;
 
         this.imageInstance = undefined;
 
         this.floor = this.gameSize.h;
-        
+
         this.chaSize = { w: this.gameSize.w / 5, h: this.gameSize.h / 2 };
-        this.chaPos = {x: this.gameSize.w / 4 ,y: this.gameSize.h / 2,};
+        this.chaPos = { x: this.gameSize.w / 4, y: this.gameSize.h / 2 };
 
         this.vel = { x: 40, y: 250 };
-        this.gravity = 2;
+        this.gravity = 1;
 
         this.init();
     }
@@ -27,7 +26,7 @@ class Character {
     }
     moveRight() {
         // if (this.chaPos.x <= this.gameSize.w - this.chaSize.w) {
-            this.chaPos.x += this.vel.x;
+        this.chaPos.x += this.vel.x;
         // } else this.chaPos.x = this.gameSize.w - this.chaSize.w;
     }
 
@@ -43,6 +42,13 @@ class Character {
             this.vel.y = 250;
         }
     }
+
+    atack1() {
+        console.log("tikitiki");
+    }
+    atack2() {
+        console.log("Dejate llevar");
+    }
 }
 
 class German extends Character {
@@ -54,13 +60,13 @@ class German extends Character {
         this.imageInstance.src = "/img/goku.png";
     }
     draw() {
-        this.ctx.fillStyle = "orange";
-        this.ctx.fillRect(
-            this.chaPos.x,
-            this.chaPos.y,
-            this.chaSize.w,
-            this.chaSize.h
-        );
+        // this.ctx.fillStyle = "orange";
+        // this.ctx.fillRect(
+        //     this.chaPos.x,
+        //     this.chaPos.y,
+        //     this.chaSize.w,
+        //     this.chaSize.h
+        // );
         this.ctx.drawImage(
             this.imageInstance,
             this.chaPos.x,
@@ -72,12 +78,7 @@ class German extends Character {
         // this.moveDown()
     }
 
-    atackGer1() {
-        console.log("tikitiki");
-    }
-    atackGer2() {
-        console.log("Dejate llevar");
-    } //PREGUNTAR TAs
+   //PREGUNTAR TAs
 }
 // class Vito extends Character {
 //     constructor(ctx, gameSize, atackVi1, atackVi2) {
