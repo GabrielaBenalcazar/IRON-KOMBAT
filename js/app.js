@@ -49,7 +49,7 @@ const controlledApp = {
                 this.character.moveLeft();
             }
             if (key === "ArrowRight") {
-                this.move();
+                this.moveRigthCha();
             }
 
             if (key == "ArrowUp") {
@@ -105,7 +105,7 @@ const controlledApp = {
             this.createPowUp();
         }
         if (this.framesIndex % 10 === 0) {
-            this.randomMove();
+            this.randomMoveImpostor();
         }
         if (this.framesIndex % 1 === 0) {
             this.character.jumpDown();
@@ -148,7 +148,7 @@ const controlledApp = {
 
     //  MOVE
 
-    randomMove() {
+    randomMoveImpostor() {
         let ranNum = Math.random();
 
         // console.log(ranNum);
@@ -165,7 +165,7 @@ const controlledApp = {
         }
     },
 
-    move() {
+    moveRigthChar() {
         if (
             this.character.chaPos.x + this.character.chaSize.w <=
             this.impostor.imPos.x
