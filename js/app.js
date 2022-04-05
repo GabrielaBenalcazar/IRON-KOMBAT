@@ -62,6 +62,7 @@ const controlledApp = {
             this.movePowUp();
             this.checkFrames();
             this.drawAll();
+            this.collisions();
 
             this.framesIndex++;
         }, 30);
@@ -71,7 +72,7 @@ const controlledApp = {
     createAll() {
         this.createCharacter();
         this.createImpostor();
-        
+
         // this.createBullets()
     },
     createCharacter() {
@@ -100,6 +101,7 @@ const controlledApp = {
         }
         if (this.framesIndex % 1 === 0) {
             this.character.jumpDown();
+            // console.log("checking frames");
         }
     },
     // DRAW
@@ -136,8 +138,6 @@ const controlledApp = {
         );
     },
 
-    //JUMP
-
     //BULLETS
 
     // createBullets() {
@@ -150,6 +150,24 @@ const controlledApp = {
     // },
 
     //COLLISIONS
+
+    collisions() {
+        console.log(this.impostor.imPos.x);
+        if (
+            this.character.chaPos.x + this.character.chaSize.w >
+            this.impostor.imPos.x
+        ) {
+            
+            this.character.atackGer();
+        }
+
+        //         if (rect1.x < rect2.x + rect2.width &&
+        //    rect1.x + rect1.width > rect2.x &&
+        //    rect1.y < rect2.y + rect2.height &&
+        //    rect1.height + rect1.y > rect2.y) {
+        //     // ¡colision detectada!
+        // }
+    },
 
     // CLEAR
     clearAll() {
