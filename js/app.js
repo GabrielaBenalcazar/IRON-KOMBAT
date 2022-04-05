@@ -18,8 +18,11 @@ const controlledApp = {
     gameSize: { w: undefined, h: undefined },
     character: undefined,
     powUp: [],
+
     // bullets: [],
     framesIndex: 0,
+
+    canMove: undefined,
 
     init(canvasID) {
         this.canvasNode = document.querySelector(`#${canvasID}`);
@@ -157,8 +160,8 @@ const controlledApp = {
             this.character.chaPos.x + this.character.chaSize.w >
             this.impostor.imPos.x
         ) {
-            
-            this.character.atackGer();
+            this.canMove = true
+
         }
 
         //         if (rect1.x < rect2.x + rect2.width &&
@@ -168,6 +171,9 @@ const controlledApp = {
         //     // ¡colision detectada!
         // }
     },
+
+
+    
 
     // CLEAR
     clearAll() {

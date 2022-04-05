@@ -1,7 +1,8 @@
 class Character {
-    constructor(ctx, gameSize) {
+    constructor(ctx, gameSize, canMove) {
         this.ctx = ctx;
         this.gameSize = gameSize;
+        this.canMove = canMove
 
         this.life = 100;
 
@@ -22,6 +23,10 @@ class Character {
         this.init();
     }
     // AVISAR A MARIA QUE LOS MOVIMIENTOS VAN POR FUERA DE GERMAN
+    dontMove() {
+        
+    }
+    
     moveLeft() {
         if (this.chaPos.x > 0) {
             this.chaPos.x -= this.vel.x;
