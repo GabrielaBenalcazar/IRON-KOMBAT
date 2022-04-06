@@ -9,25 +9,30 @@ class Bullets {
             y: imPosY + this.gameSize.h / 4,
         };
 
+        this.bullSize = { w: 50, h: 50 };
+
         this.radius = 10;
 
         this.floor = this.gameSize.h;
 
         this.vel = { x: -30, y: 0 };
+        this.init();
+    }
+
+    init() {
+        this.imageInstance = new Image();
+        this.imageInstance.src = "../img/goku2.png";
     }
 
     draw() {
-        this.ctx.beginPath();
-        this.ctx.fillStyle = "black";
-        this.ctx.arc(
+        this.ctx.drawImage(
+            this.imageInstance,
             this.bullPos.x,
             this.bullPos.y,
-            this.radius,
-            0,
-            Math.PI * 2
+            this.bullSize.w,
+            this.bullSize.h
         );
-        this.ctx.fill();
-        this.ctx.closePath();
+
         this.move();
         // console.log("SALEN LAS BALAS?");
     }

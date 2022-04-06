@@ -255,9 +255,14 @@ const controlledApp = {
     //CLEAR BULLETS
     clearBullets() {
         let filteredBullets = this.impostor.bullets.filter(
-            (eachBullet) => eachBullet.bullPos.x + eachBullet.radius * 2 < 0
+            (eachBullet) => eachBullet.bullPos.x + eachBullet.bullSize.w < 0
         );
 
         this.impostor.bullets.splice(0, filteredBullets.length);
     },
 };
+
+
+
+
+
