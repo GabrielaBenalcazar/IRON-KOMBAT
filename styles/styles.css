@@ -42,5 +42,7 @@ body button {
 
 
 #canvas {
-    background-color: lightblue;
+    background-image: url("../img/IRONKOMBAT.jpg");
+    background-size: cover;
 }
+

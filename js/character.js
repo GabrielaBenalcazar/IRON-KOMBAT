@@ -55,14 +55,12 @@ class Character {
     drawCharLive() {
         this.ctx.fillStyle = "blue";
         this.ctx.fillRect(
-            (this.gameSize.w / 2 - this.drawCharLiveSize.w) - 100,
+            this.gameSize.w / 2 - this.drawCharLiveSize.w - 100,
             0,
             this.drawCharLiveSize.w,
             this.drawCharLiveSize.h
         );
     }
-
-    
 }
 
 class German extends Character {
@@ -71,20 +69,36 @@ class German extends Character {
     }
     init() {
         this.imageInstance = new Image();
-        this.imageInstance.src = "/img/goku.png";
+        this.imageInstance.src = "../img/GERMAN.png/";
+        this.imageInstance.frames = 6;
+        this.imageInstance.framesCha = 0;
     }
-    draw() {
+    draw(framesIndex) {
         this.ctx.drawImage(
             this.imageInstance,
+            this.imageInstance.framesIndex *
+                (this.imageInstance.width / this.imageInstance.frames),
+            0,
+            this.imageInstance.width / this.imageInstance.frames,
+            this.imageInstance.height,
             this.chaPos.x,
             this.chaPos.y,
             this.chaSize.w,
             this.chaSize.h
         );
 
+        this.animate(framesIndex);
+
         // this.moveDown()
     }
-
+    animate(framesIndex) {
+        if (framesIndex % 5 == 0) {
+            this.imageInstance.framesCha++;
+        }
+        if (this.imageInstance.framesCha >= this.imageInstance.frames) {
+            this.imageInstance.framesCha = 0;
+        }
+    }
     //PREGUNTAR TAs
 }
 // class Vito extends Character {

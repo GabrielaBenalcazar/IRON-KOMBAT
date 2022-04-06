@@ -74,10 +74,12 @@ const controlledApp = {
             this.chaDamage();
 
             this.drawAll();
-            // this.collisions();
+
             this.character.jumpDown();
 
-            this.framesIndex++;
+            this.framesIndex > 5000
+                ? (this.framesIndex = 0)
+                : this.framesIndex++;
         }, 30);
     },
 
@@ -111,7 +113,7 @@ const controlledApp = {
     // DRAW
 
     drawAll() {
-        this.character.draw();
+        this.character.draw(this.framesIndex);
         this.impostor.draw();
         this.character.drawCharLive();
         this.impostor.drawImLive();
@@ -123,21 +125,6 @@ const controlledApp = {
             element.drawRandomPowUp();
         });
     },
-
-    // drawRoad() {
-    //     this.ctx.fillStyle = "red";
-    //     this.ctx.fillRect(0, 0, this.gameSize.w / 2, this.gameSize.h);
-    // },
-    // drawRoad2() {
-    //     this.ctx.fillStyle = "grey";
-    //     this.ctx.fillRect(
-    //         this.gameSize.w / 2,
-    //         0,
-    //         this.gameSize.w / 2,
-    //         this.gameSize.h
-    //     );
-    // },
-
     //  MOVE
 
     randomMoveImpostor() {

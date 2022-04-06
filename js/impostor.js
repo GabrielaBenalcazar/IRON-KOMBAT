@@ -15,7 +15,7 @@ class Impostor {
         this.imSize = { w: this.gameSize.w / 5, h: this.gameSize.h / 2 };
         this.drawImLiveSize = { w: this.gameSize.w / 4, h: 30 };
 
-        this.vel = { x: 100, y: 160 };
+        this.vel = { x: 50, y: 160 };
         this.gravity = 0.4;
 
         //balas
