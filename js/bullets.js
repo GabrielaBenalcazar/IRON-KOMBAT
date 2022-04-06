@@ -15,7 +15,7 @@ class Bullets {
 
         this.floor = this.gameSize.h;
 
-        this.vel = { x: -10, y: 0 };
+        this.vel = { x: -20, y: 0 };
         this.init();
     }
 

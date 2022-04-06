@@ -69,14 +69,14 @@ class German extends Character {
     }
     init() {
         this.imageInstance = new Image();
-        this.imageInstance.src = "../img/GERMAN.png/";
+        this.imageInstance.src = "../img/GERMAN.png";
         this.imageInstance.frames = 6;
         this.imageInstance.framesCha = 0;
     }
     draw(framesIndex) {
         this.ctx.drawImage(
             this.imageInstance,
-            this.imageInstance.framesIndex *
+            this.imageInstance.framesCha *
                 (this.imageInstance.width / this.imageInstance.frames),
             0,
             this.imageInstance.width / this.imageInstance.frames,
@@ -87,14 +87,10 @@ class German extends Character {
             this.chaSize.h
         );
 
-        this.animate(framesIndex);
-
         // this.moveDown()
     }
-    animate(framesIndex) {
-        if (framesIndex % 5 == 0) {
-            this.imageInstance.framesCha++;
-        }
+    animate() {
+        this.imageInstance.framesCha++;
         if (this.imageInstance.framesCha >= this.imageInstance.frames) {
             this.imageInstance.framesCha = 0;
         }

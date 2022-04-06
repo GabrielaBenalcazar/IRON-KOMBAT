@@ -48,9 +48,11 @@ const controlledApp = {
             const { key } = event;
             if (key === "ArrowLeft") {
                 this.character.moveLeft();
+                this.character.animate();
             }
             if (key === "ArrowRight") {
                 this.moveRigthChar();
+                this.character.animate();
             }
 
             if (key == "ArrowUp") {
@@ -285,6 +287,7 @@ const controlledApp = {
             this.impostor.life -= 20;
         } else {
             this.impostor.life = 0;
+            this.win();
         }
 
         console.log("menos vida", this.impostor.life);
@@ -326,14 +329,26 @@ const controlledApp = {
         this.impostor.bullets.splice(0, filteredBullets.length);
     },
 
-    //gGAMEOVER
+    //GAMEOVER
+    
     gameOver() {
         if (this.character.life === 0) {
             this.drawGameOver();
             clearInterval(this.intervalId);
         }
     },
+    win() {
+        if (this.impostor.life === 0) {
+            this.drawWinning();
+            clearInterval(this.intervalId);
+        }
+    },
+
     drawGameOver() {
+        this.imageInstance = new Image();
+        this.imageInstance.src = "";
+    },
+    drawWinning() {
         this.imageInstance = new Image();
         this.imageInstance.src = "";
     },
