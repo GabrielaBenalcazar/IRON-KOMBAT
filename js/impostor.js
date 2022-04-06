@@ -1,10 +1,10 @@
 class Impostor {
-    constructor(ctx, gameSize, chaSize, chaPos) {
+    constructor(ctx, gameSize, chLive) {
         this.ctx = ctx;
 
         this.gameSize = gameSize;
 
-        this.life = 100;
+        this.life = chLive;
 
         this.imageInstance = undefined;
 
@@ -13,14 +13,13 @@ class Impostor {
             y: this.gameSize.h / 2,
         };
         this.imSize = { w: this.gameSize.w / 5, h: this.gameSize.h / 2 };
+        this.drawImLiveSize = { w: this.gameSize.w / 4, h: 30 };
 
         this.vel = { x: 100, y: 160 };
         this.gravity = 0.4;
 
         //balas
         this.bullets = [];
-
-    
 
         this.init();
     }
@@ -29,17 +28,25 @@ class Impostor {
         this.imageInstance.src = "../img/goku2.png";
     }
     draw() {
-        
         this.ctx.drawImage(
             this.imageInstance,
             this.imPos.x,
             this.imPos.y,
             this.imSize.w,
             this.imSize.h
-            
         );
-        
-        this.bullets.forEach(bullet => bullet.draw())
+
+        this.bullets.forEach((bullet) => bullet.draw());
+    }
+
+    drawImLive() {
+        this.ctx.fillStyle = "red";
+        this.ctx.fillRect(
+            this.gameSize.w / 2 + 100,
+            0,
+            this.drawImLiveSize.w,
+            this.drawImLiveSize.h
+        );
     }
 
     shoot() {

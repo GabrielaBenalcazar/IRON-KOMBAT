@@ -1,15 +1,17 @@
 class Character {
-    constructor(ctx, gameSize, collision) {
+    constructor(ctx, gameSize, chLive) {
         this.ctx = ctx;
         this.gameSize = gameSize;
 
-        this.life = 100;
+        this.life = chLive;
 
         this.imageInstance = undefined;
 
         this.floor = this.gameSize.h;
 
         this.chaSize = { w: this.gameSize.w / 5, h: this.gameSize.h / 2 };
+        this.drawCharLiveSize = { w: this.gameSize.w / 4, h: 30 };
+
         this.chaPos = { x: this.gameSize.w / 4, y: this.gameSize.h / 2 };
 
         this.vel = { x: 40, y: 250 };
@@ -49,24 +51,29 @@ class Character {
     atack2() {
         console.log("Dejate llevar");
     }
+
+    drawCharLive() {
+        this.ctx.fillStyle = "blue";
+        this.ctx.fillRect(
+            (this.gameSize.w / 2 - this.drawCharLiveSize.w) - 100,
+            0,
+            this.drawCharLiveSize.w,
+            this.drawCharLiveSize.h
+        );
+    }
+
+    
 }
 
 class German extends Character {
-    constructor(ctx, gameSize) {
-        super(ctx, gameSize);
+    constructor(ctx, gameSize, chLive) {
+        super(ctx, gameSize, chLive);
     }
     init() {
         this.imageInstance = new Image();
         this.imageInstance.src = "/img/goku.png";
     }
     draw() {
-        // this.ctx.fillStyle = "orange";
-        // this.ctx.fillRect(
-        //     this.chaPos.x,
-        //     this.chaPos.y,
-        //     this.chaSize.w,
-        //     this.chaSize.h
-        // );
         this.ctx.drawImage(
             this.imageInstance,
             this.chaPos.x,
@@ -78,7 +85,7 @@ class German extends Character {
         // this.moveDown()
     }
 
-   //PREGUNTAR TAs
+    //PREGUNTAR TAs
 }
 // class Vito extends Character {
 //     constructor(ctx, gameSize, atackVi1, atackVi2) {

@@ -18,6 +18,7 @@ const controlledApp = {
     gameSize: { w: undefined, h: undefined },
     character: undefined,
     powUp: [],
+    intervalId: undefined,
 
     framesIndex: 0,
 
@@ -30,6 +31,7 @@ const controlledApp = {
         this.setDimensions();
         this.createAll();
         this.setEventListeners();
+        this.atack();
         this.start();
     },
 
@@ -54,19 +56,26 @@ const controlledApp = {
             if (key == "ArrowUp") {
                 this.character.jump();
             }
+
+            if (key == "a") {
+                this.atack();
+            }
         };
     },
 
     //EL CORAZÓN
     start() {
-        setInterval(() => {
+        this.intervalId = setInterval(() => {
             this.clearAll();
             this.movePowUp();
             this.checkFrames();
             this.shootingTime();
-            this.atack();
+            this.lifeUp();
+            this.chaDamage();
+
             this.drawAll();
             // this.collisions();
+            this.character.jumpDown();
 
             this.framesIndex++;
         }, 30);
@@ -80,15 +89,10 @@ const controlledApp = {
         // this.createBullets()
     },
     createCharacter() {
-        this.character = new German(this.ctx, this.gameSize);
+        this.character = new German(this.ctx, this.gameSize, 100);
     },
     createImpostor() {
-        this.impostor = new Impostor(
-            this.ctx,
-            this.gameSize,
-            this.character.chaPos.x,
-            this.character.chaSize.w
-        );
+        this.impostor = new Impostor(this.ctx, this.gameSize, 100);
     },
 
     createPowUp() {
@@ -102,20 +106,17 @@ const controlledApp = {
         if (this.framesIndex % 10 === 0) {
             this.randomMoveImpostor();
         }
-        if (this.framesIndex % 1 === 0) {
-            this.character.jumpDown();
-        }
     },
 
     // DRAW
 
     drawAll() {
-        // this.drawRoad();
-        // this.drawRoad2();
         this.character.draw();
         this.impostor.draw();
+        this.character.drawCharLive();
+        this.impostor.drawImLive();
+
         this.drawPowUp();
-        // this.drawBullets()
     },
     drawPowUp() {
         this.powUp.forEach((element) => {
@@ -192,17 +193,6 @@ const controlledApp = {
 
     //COLLISIONS
 
-    // collisions() {
-    //     console.log(this.impostor.imPos.x);
-    //     if (
-    //         this.character.chaPos.x + this.character.chaSize.w >
-    //         this.impostor.imPos.x
-    //     ) {
-    //         console.log("atack");
-    //         // this.collision = true;
-    //     }
-    // },
-
     collision2(rect1X, rect1Y, rect1W, rect1H, rect2X, rect2Y, rect2W, rect2H) {
         if (
             rect1X <= rect2X + rect2W &&
@@ -215,6 +205,7 @@ const controlledApp = {
     },
 
     atack() {
+        // CAMBIO DE FRAMES IMAGEN POR LA DEL ATAQUE
         if (
             this.collision2(
                 this.character.chaPos.x,
@@ -227,10 +218,97 @@ const controlledApp = {
                 this.impostor.imSize.h
             ) === true
         ) {
+            this.loseImpLive();
+
             console.log("atack");
             // this.character.atack2()
         }
     },
+
+    lifeUp() {
+        this.powUp.forEach((eachPowUp) => {
+            if (
+                this.collision2(
+                    eachPowUp.powUpPos.x,
+                    eachPowUp.powUpPos.y,
+                    eachPowUp.powUpSize.w,
+                    eachPowUp.powUpSize.h,
+                    this.character.chaPos.x,
+                    this.character.chaPos.y,
+                    this.character.chaSize.w,
+                    this.character.chaSize.h
+                ) === true
+            ) {
+                // this.character.atack2()
+                this.moreLive();
+
+                const i = this.powUp.indexOf(eachPowUp);
+                this.powUp.splice(i, 1);
+            }
+        });
+    },
+
+    chaDamage() {
+        this.impostor.bullets.forEach((eachBullet) => {
+            if (
+                this.collision2(
+                    eachBullet.bullPos.x,
+                    eachBullet.bullPos.y,
+                    eachBullet.bullSize.w,
+                    eachBullet.bullSize.h,
+                    this.character.chaPos.x,
+                    this.character.chaPos.y,
+                    this.character.chaSize.w,
+                    this.character.chaSize.h
+                ) === true
+            ) {
+                // this.character.atack2()
+                this.looseChaLive();
+
+                const i = this.impostor.bullets.indexOf(eachBullet);
+                this.impostor.bullets.splice(i, 1);
+            }
+        });
+    },
+
+    //live related
+
+    moreLive() {
+        if (this.character.life < 100) {
+            this.character.life += 10;
+        } else {
+            this.character.life = 100;
+        }
+        console.log("mas vida", this.character.life);
+    },
+
+    looseChaLive() {
+        if (this.character.life > 0) {
+            this.character.life -= 10;
+            return true;
+        } else {
+            this.character.life = 0;
+            this.gameOver();
+        }
+        console.log("menos vida", this.character.life);
+    },
+
+    loseImpLive() {
+        if (this.impostor.life > 0) {
+            this.impostor.life -= 20;
+        } else {
+            this.impostor.life = 0;
+        }
+
+        console.log("menos vida", this.impostor.life);
+    },
+
+    // changeLifeBar() {
+    //     if (this.looseChaLive === true) {
+    //         drawCharLiveSize.w
+    //     }
+
+    // },
 
     // CLEAR
     clearAll() {
@@ -260,9 +338,16 @@ const controlledApp = {
 
         this.impostor.bullets.splice(0, filteredBullets.length);
     },
+
+    //gGAMEOVER
+    gameOver() {
+        if (this.character.life === 0) {
+            this.drawGameOver();
+            clearInterval(this.intervalId);
+        }
+    },
+    drawGameOver() {
+        this.imageInstance = new Image();
+        this.imageInstance.src = "";
+    },
 };
-
-
-
-
-
