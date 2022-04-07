@@ -14,7 +14,7 @@ class Character {
 
         this.chaPos = { x: this.gameSize.w / 4, y: this.gameSize.h / 2 };
 
-        this.vel = { x: 40, y: 300 };
+        this.vel = { x: 30, y: 300 };
         this.gravity = 1;
 
         this.init();
