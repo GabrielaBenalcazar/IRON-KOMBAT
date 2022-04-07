@@ -1,6 +1,11 @@
 window.onload = () => {
     document.getElementById("start-button").onclick = () => {
         startGame();
+
+        this.music = new Audio("./music/music_music1.wav");
+        this.music.play();
+        this.music.loop = true;
+        this.music.volume = 0.2;
     };
     function startGame() {
         controlledApp.init("canvas");
@@ -53,7 +58,7 @@ const controlledApp = {
     },
 
     loadTikitiki() {
-        this.music = new Audio("./music/tikitiki1.mp3");
+        this.tikitikiInstance = new Audio("./music/tikitiki1.mp3");
     },
 
     loadLifeImages() {
@@ -95,26 +100,26 @@ const controlledApp = {
         this.lifeImImage100 = new Image();
         this.lifeImImage100.src = "./img/10VI.png";
 
-        // this.lifeImImage90 = new Image()
-        // this.lifeImImage.src = './img/9VI.png'
+        this.lifeImImage90 = new Image();
+        this.lifeImImage90.src = "./img/9VI.png";
 
         this.lifeImImage80 = new Image();
         this.lifeImImage80.src = "./img/8VI.png";
 
-        // this.lifeImImage70 = new Image()
-        // this.lifeImImage70.src = './img/7VI.png'
+        this.lifeImImage70 = new Image();
+        this.lifeImImage70.src = "./img/7VI.png";
 
         this.lifeImImage60 = new Image();
         this.lifeImImage60.src = "./img/6VI.png";
 
-        // this.lifeImImage50 = new Image()
-        // this.lifeImImage50.src = './img/5VI.png'
+        this.lifeImImage50 = new Image();
+        this.lifeImImage50.src = "./img/5VI.png";
 
         this.lifeImImage40 = new Image();
         this.lifeImImage40.src = "./img/4VI.png";
 
-        // this.lifeImImage30 = new Image()
-        // this.lifeImImage30.src = './img/3VI.png'
+        this.lifeImImage30 = new Image();
+        this.lifeImImage30.src = "./img/3VI.png";
 
         this.lifeImImage20 = new Image();
         this.lifeImImage20.src = "./img/2VI.png";
@@ -150,7 +155,7 @@ const controlledApp = {
                 this.character.jump();
             }
 
-            if (key == "a") {
+            if (key == "a" || key == "A") {
                 this.atack();
             }
         };
@@ -210,6 +215,8 @@ const controlledApp = {
     drawAll() {
         this.drawBg();
 
+        this.drawFloor();
+
         this.character.draw();
         this.impostor.draw();
 
@@ -221,6 +228,20 @@ const controlledApp = {
 
     drawBg() {
         this.ctx.drawImage(this.bg, 0, 0, this.gameSize.w, this.gameSize.h);
+    },
+
+    drawFloor() {
+        this.ctx.beginPath();
+
+        this.ctx.moveTo(50, this.gameSize.h - 50);
+        this.ctx.lineTo(100, this.gameSize.h - 150);
+        this.ctx.lineTo(this.gameSize.w - 100, this.gameSize.h - 150);
+        this.ctx.lineTo(this.gameSize.w - 50, this.gameSize.h - 50);
+
+        this.ctx.closePath();
+
+        this.ctx.fillStyle = "#774466";
+        this.ctx.fill();
     },
 
     createLife() {
@@ -274,34 +295,38 @@ const controlledApp = {
         if (this.impostor.life > 90) {
             this.lifeIm.draw(this.lifeImImage100);
         }
-        // if (this.impostor.life > 80) {
-        //     this.lifeIm.draw(this.lifeImImage90)
-        // }
+        if (this.impostor.life > 80) {
+            this.lifeIm.draw(this.lifeImImage90);
+        }
 
         if (this.impostor.life > 70) {
             this.lifeIm.draw(this.lifeImImage80);
         }
 
-        // if (this.impostor.life > 60) {
-        //     this.lifeIm.draw(this.lifeImImage70)
-        // }
+        if (this.impostor.life > 60) {
+            this.lifeIm.draw(this.lifeImImage70);
+        }
         if (this.impostor.life > 50) {
             this.lifeIm.draw(this.lifeImImage60);
         }
 
-        // if (this.impostor.life > 40) {
-        //     this.lifeIm.draw(this.lifeImImage50)
-        // }
+        if (this.impostor.life > 40) {
+            this.lifeIm.draw(this.lifeImImage50);
+        }
 
         if (this.impostor.life > 30) {
             this.lifeIm.draw(this.lifeImImage40);
         }
-        // if (this.impostor.life > 20) {
-        //     this.lifeIm.draw(this.lifeImImage30)
-        // }
+        if (this.impostor.life > 20) {
+            this.lifeIm.draw(this.lifeImImage30);
+        }
 
         if (this.impostor.life > 10) {
             this.lifeIm.draw(this.lifeImImage20);
+        }
+
+        if (this.impostor.life <= 10) {
+            this.lifeIm.draw(this.lifeImImage10);
         }
     },
     loadVersus() {
@@ -353,12 +378,6 @@ const controlledApp = {
         ) {
             this.character.moveRight();
         }
-
-        // if (
-        //     this.impostor.imPos.x >= this.character.chaPos.x + this.character.chaSize.w ) {
-        //     console.log("note muevas IMPOS!!!!!!!!");
-        //     this.Impostor.moveLeft();
-        // }
     },
 
     movePowUp() {
@@ -411,9 +430,9 @@ const controlledApp = {
     },
 
     tikitiki() {
-        this.music.play();
-        this.music.loop = false;
-        this.music.volume = 1;
+        this.tikitikiInstance.play();
+        this.tikitikiInstance.loop = false;
+        this.tikitikiInstance.volume = 1;
     },
 
     lifeUp() {
@@ -472,10 +491,9 @@ const controlledApp = {
     },
 
     looseChaLive() {
-        if (this.character.life > 0) {
-            this.character.life -= 10;
-            return true;
-        } else {
+        this.character.life -= 20;
+
+        if (this.character.life <= 0) {
             this.character.life = 0;
             this.gameOver();
         }
@@ -483,7 +501,7 @@ const controlledApp = {
     },
 
     loseImpLive() {
-        this.impostor.life -= 20;
+        this.impostor.life -= 10;
 
         if (this.impostor.life <= 0) {
             this.impostor.life = 0;
