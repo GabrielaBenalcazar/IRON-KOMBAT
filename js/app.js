@@ -17,8 +17,10 @@ const controlledApp = {
     ctx: undefined,
     gameSize: { w: undefined, h: undefined },
     character: undefined,
+    impostor: undefined,
     powUp: [],
     intervalId: undefined,
+    imageInstance: undefined,
 
     framesIndex: 0,
 
@@ -28,11 +30,89 @@ const controlledApp = {
         this.canvasNode = document.querySelector(`#${canvasID}`);
         this.ctx = this.canvasNode.getContext("2d");
         //console.log("el contexto", this.ctx);
+
         this.setDimensions();
         this.createAll();
         this.setEventListeners();
         this.atack();
+
         this.start();
+
+        this.loadLifeImImages();
+        this.loadLifeImages();
+        this.instanceGameOver();
+        this.instanceWinning();
+        this.loadVersus();
+    },
+
+    loadLifeImages() {
+        this.lifeImage100 = new Image();
+        this.lifeImage100.src = "./img/10V.png";
+
+        this.lifeImage90 = new Image();
+        this.lifeImage90.src = "./img/9V.png";
+
+        this.lifeImage80 = new Image();
+        this.lifeImage80.src = "./img/8V.png";
+
+        this.lifeImage70 = new Image();
+        this.lifeImage70.src = "./img/7V.png";
+
+        this.lifeImage60 = new Image();
+        this.lifeImage60.src = "./img/6V.png";
+
+        this.lifeImage50 = new Image();
+        this.lifeImage50.src = "./img/5V.png";
+
+        this.lifeImage40 = new Image();
+        this.lifeImage40.src = "./img/4V.png";
+
+        this.lifeImage30 = new Image();
+        this.lifeImage30.src = "./img/3V.png";
+
+        this.lifeImage20 = new Image();
+        this.lifeImage20.src = "./img/2V.png";
+
+        this.lifeImage10 = new Image();
+        this.lifeImage10.src = "./img/1V.png";
+
+        this.lifeImage0 = new Image();
+        this.lifeImage0.src = "./img/0V.png";
+    },
+
+    loadLifeImImages() {
+        this.lifeImImage100 = new Image();
+        this.lifeImImage100.src = "./img/10VI.png";
+
+        // this.lifeImImage90 = new Image()
+        // this.lifeImImage.src = './img/9VI.png'
+
+        this.lifeImImage80 = new Image();
+        this.lifeImImage80.src = "./img/8VI.png";
+
+        // this.lifeImImage70 = new Image()
+        // this.lifeImImage70.src = './img/7VI.png'
+
+        this.lifeImImage60 = new Image();
+        this.lifeImImage60.src = "./img/6VI.png";
+
+        // this.lifeImImage50 = new Image()
+        // this.lifeImImage50.src = './img/5VI.png'
+
+        this.lifeImImage40 = new Image();
+        this.lifeImImage40.src = "./img/4VI.png";
+
+        // this.lifeImImage30 = new Image()
+        // this.lifeImImage30.src = './img/3VI.png'
+
+        this.lifeImImage20 = new Image();
+        this.lifeImImage20.src = "./img/2VI.png";
+
+        this.lifeImImage10 = new Image();
+        this.lifeImImage10.src = "./img/1VI.png";
+
+        this.lifeImImage0 = new Image();
+        this.lifeImImage0.src = "./img/0VI.png";
     },
 
     setDimensions() {
@@ -89,6 +169,8 @@ const controlledApp = {
     createAll() {
         this.createCharacter();
         this.createImpostor();
+        this.createLife();
+        this.createLifeIm();
 
         // this.createBullets()
     },
@@ -115,13 +197,99 @@ const controlledApp = {
     // DRAW
 
     drawAll() {
-        this.character.draw(this.framesIndex);
+        this.character.draw();
         this.impostor.draw();
-        this.character.drawCharLive();
-        this.impostor.drawImLive();
 
         this.drawPowUp();
+        this.drawLife();
+        this.drawLifeIm();
+        this.drawVersus();
     },
+
+    createLife() {
+        this.life = new Life(this.ctx, this.gameSize, 100, 50, 500, 100);
+    },
+
+    createLifeIm() {
+        this.lifeIm = new LifeIm(this.ctx, this.gameSize, 1200, 50, 500, 100);
+    },
+
+    drawLife() {
+        if (this.character.life > 90) {
+            this.life.draw(this.lifeImage100);
+        }
+
+        if (this.character.life > 80) {
+            this.life.draw(this.lifeImage90);
+        }
+
+        if (this.character.life > 70) {
+            this.life.draw(this.lifeImage80);
+        }
+
+        if (this.character.life > 60) {
+            this.life.draw(this.lifeImage70);
+        }
+        if (this.character.life > 50) {
+            this.life.draw(this.lifeImage60);
+        }
+
+        if (this.character.life > 40) {
+            this.life.draw(this.lifeImage50);
+        }
+
+        if (this.character.life > 30) {
+            this.life.draw(this.lifeImage40);
+        }
+        if (this.character.life > 20) {
+            this.life.draw(this.lifeImage30);
+        }
+
+        if (this.character.life > 10) {
+            this.life.draw(this.lifeImage20);
+        }
+        if (this.character.life > 0) {
+            this.life.draw(this.lifeImage10);
+        }
+    },
+
+    drawLifeIm() {
+        if (this.impostor.life > 90) {
+            this.lifeIm.draw(this.lifeImImage100);
+        }
+
+        if (this.impostor.life > 70) {
+            this.lifeIm.draw(this.lifeImImage80);
+        }
+
+        if (this.impostor.life > 50) {
+            this.lifeIm.draw(this.lifeImImage60);
+        }
+
+        if (this.impostor.life > 30) {
+            this.lifeIm.draw(this.lifeImImage40);
+        }
+
+        if (this.impostor.life > 10) {
+            this.lifeIm.draw(this.lifeImImage20);
+        }
+    },
+
+    loadVersus() {
+        this.versusInstance = new Image();
+        this.versusInstance.src = "../img/VS.png";
+    },
+
+    drawVersus() {
+        this.ctx.drawImage(
+            this.versusInstance,
+            this.gameSize.w / 2 - 330,
+            0,
+            650,
+            250
+        );
+    },
+
     drawPowUp() {
         this.powUp.forEach((element) => {
             element.drawRandomPowUp();
@@ -208,9 +376,7 @@ const controlledApp = {
             ) === true
         ) {
             this.loseImpLive();
-
-            console.log("atack");
-            // this.character.atack2()
+            this.character.drawPunch();
         }
     },
 
@@ -228,7 +394,6 @@ const controlledApp = {
                     this.character.chaSize.h
                 ) === true
             ) {
-                // this.character.atack2()
                 this.moreLive();
 
                 const i = this.powUp.indexOf(eachPowUp);
@@ -251,7 +416,6 @@ const controlledApp = {
                     this.character.chaSize.h
                 ) === true
             ) {
-                // this.character.atack2()
                 this.looseChaLive();
 
                 const i = this.impostor.bullets.indexOf(eachBullet);
@@ -330,26 +494,56 @@ const controlledApp = {
     },
 
     //GAMEOVER
-    
+
     gameOver() {
         if (this.character.life === 0) {
-            this.drawGameOver();
+            console.log("HAS PERDIDO");
+            this.reset();
             clearInterval(this.intervalId);
+            this.drawGameOver();
         }
     },
     win() {
         if (this.impostor.life === 0) {
-            this.drawWinning();
+            console.log("HAS GANADO");
+            this.reset();
             clearInterval(this.intervalId);
+            this.drawWinning();
         }
     },
 
-    drawGameOver() {
-        this.imageInstance = new Image();
-        this.imageInstance.src = "";
+    instanceGameOver() {
+        this.gameOverInstance = new Image();
+        this.gameOverInstance.src = "./img/gameover1.jpeg";
     },
+    instanceWinning() {
+        this.winInstance = new Image();
+        this.winInstance.src = "./img/gameover1.jpeg";
+    },
+
+    drawGameOver() {
+        this.ctx.drawImage(
+            this.gameOverInstance,
+            0,
+            0,
+            this.gameSize.w,
+            this.gameSize.h
+        );
+    },
+
     drawWinning() {
-        this.imageInstance = new Image();
-        this.imageInstance.src = "";
+        this.ctx.drawImage(
+            this.winInstance,
+            0,
+            0,
+            this.gameSize.w,
+            this.gameSize.h
+        );
+    },
+
+    reset() {
+        this.character = undefined;
+        this.impostor = undefined;
+        this.powUp = [];
     },
 };

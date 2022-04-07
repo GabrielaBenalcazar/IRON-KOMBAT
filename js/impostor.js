@@ -25,7 +25,7 @@ class Impostor {
     }
     init() {
         this.imageInstance = new Image();
-        this.imageInstance.src = "../img/goku2.png";
+        this.imageInstance.src = "../img/IMPOSTOR1.png";
     }
     draw() {
         this.ctx.drawImage(

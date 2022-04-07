@@ -14,7 +14,7 @@ class Character {
 
         this.chaPos = { x: this.gameSize.w / 4, y: this.gameSize.h / 2 };
 
-        this.vel = { x: 40, y: 250 };
+        this.vel = { x: 40, y: 300 };
         this.gravity = 1;
 
         this.init();
@@ -41,15 +41,8 @@ class Character {
             this.vel.y += this.gravity;
             this.chaPos.y += this.vel.y;
         } else {
-            this.vel.y = 250;
+            this.vel.y = 300;
         }
-    }
-
-    atack1() {
-        console.log("tikitiki");
-    }
-    atack2() {
-        console.log("Dejate llevar");
     }
 
     drawCharLive() {
@@ -72,8 +65,11 @@ class German extends Character {
         this.imageInstance.src = "../img/GERMAN.png";
         this.imageInstance.frames = 6;
         this.imageInstance.framesCha = 0;
+
+        this.imageInstancePunch = new Image();
+        this.imageInstancePunch.src = "./img/GERMAN1.png";
     }
-    draw(framesIndex) {
+    draw() {
         this.ctx.drawImage(
             this.imageInstance,
             this.imageInstance.framesCha *
@@ -86,14 +82,22 @@ class German extends Character {
             this.chaSize.w,
             this.chaSize.h
         );
-
-        // this.moveDown()
     }
     animate() {
         this.imageInstance.framesCha++;
         if (this.imageInstance.framesCha >= this.imageInstance.frames) {
             this.imageInstance.framesCha = 0;
         }
+    }
+
+    drawPunch() {
+        this.ctx.drawImage(
+            this.imageInstancePunch,
+            this.chaPos.x,
+            this.chaPos.y,
+            this.chaSize.w,
+            this.chaSize.h
+        );
     }
     //PREGUNTAR TAs
 }

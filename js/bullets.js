@@ -9,19 +9,19 @@ class Bullets {
             y: imPosY + this.gameSize.h / 4,
         };
 
-        this.bullSize = { w: 100, h: 80};
+        this.bullSize = { w: 100, h: 80 };
 
         this.radius = 10;
 
         this.floor = this.gameSize.h;
 
-        this.vel = { x: -20, y: 0 };
+        this.vel = { x: -10, y: 0 };
         this.init();
     }
 
     init() {
         this.imageInstance = new Image();
-        this.imageInstance.src = "../img/BULLET.png";
+        this.imageInstance.src = "../img/BULLET1.png";
     }
 
     draw() {
