@@ -38,11 +38,22 @@ const controlledApp = {
 
         this.start();
 
+        this.loadBackground();
+        this.loadTikitiki();
         this.loadLifeImImages();
         this.loadLifeImages();
         this.instanceGameOver();
         this.instanceWinning();
         this.loadVersus();
+    },
+
+    loadBackground() {
+        this.bg = new Image();
+        this.bg.src = "./img/FONDODESENFOCADO.jpg";
+    },
+
+    loadTikitiki() {
+        this.music = new Audio("./music/tikitiki1.mp3");
     },
 
     loadLifeImages() {
@@ -197,6 +208,8 @@ const controlledApp = {
     // DRAW
 
     drawAll() {
+        this.drawBg();
+
         this.character.draw();
         this.impostor.draw();
 
@@ -204,6 +217,10 @@ const controlledApp = {
         this.drawLife();
         this.drawLifeIm();
         this.drawVersus();
+    },
+
+    drawBg() {
+        this.ctx.drawImage(this.bg, 0, 0, this.gameSize.w, this.gameSize.h);
     },
 
     createLife() {
@@ -248,7 +265,7 @@ const controlledApp = {
         if (this.character.life > 10) {
             this.life.draw(this.lifeImage20);
         }
-        if (this.character.life > 0) {
+        if (this.character.life >= 0) {
             this.life.draw(this.lifeImage10);
         }
     },
@@ -257,24 +274,36 @@ const controlledApp = {
         if (this.impostor.life > 90) {
             this.lifeIm.draw(this.lifeImImage100);
         }
+        // if (this.impostor.life > 80) {
+        //     this.lifeIm.draw(this.lifeImImage90)
+        // }
 
         if (this.impostor.life > 70) {
             this.lifeIm.draw(this.lifeImImage80);
         }
 
+        // if (this.impostor.life > 60) {
+        //     this.lifeIm.draw(this.lifeImImage70)
+        // }
         if (this.impostor.life > 50) {
             this.lifeIm.draw(this.lifeImImage60);
         }
 
+        // if (this.impostor.life > 40) {
+        //     this.lifeIm.draw(this.lifeImImage50)
+        // }
+
         if (this.impostor.life > 30) {
             this.lifeIm.draw(this.lifeImImage40);
         }
+        // if (this.impostor.life > 20) {
+        //     this.lifeIm.draw(this.lifeImImage30)
+        // }
 
         if (this.impostor.life > 10) {
             this.lifeIm.draw(this.lifeImImage20);
         }
     },
-
     loadVersus() {
         this.versusInstance = new Image();
         this.versusInstance.src = "../img/VS.png";
@@ -377,7 +406,14 @@ const controlledApp = {
         ) {
             this.loseImpLive();
             this.character.drawPunch();
+            this.tikitiki();
         }
+    },
+
+    tikitiki() {
+        this.music.play();
+        this.music.loop = false;
+        this.music.volume = 1;
     },
 
     lifeUp() {
@@ -447,9 +483,9 @@ const controlledApp = {
     },
 
     loseImpLive() {
-        if (this.impostor.life > 0) {
-            this.impostor.life -= 20;
-        } else {
+        this.impostor.life -= 20;
+
+        if (this.impostor.life <= 0) {
             this.impostor.life = 0;
             this.win();
         }
@@ -514,11 +550,11 @@ const controlledApp = {
 
     instanceGameOver() {
         this.gameOverInstance = new Image();
-        this.gameOverInstance.src = "./img/gameover1.jpeg";
+        this.gameOverInstance.src = "./img/GAMEOVERBIEN.jpg";
     },
     instanceWinning() {
         this.winInstance = new Image();
-        this.winInstance.src = "./img/gameover1.jpeg";
+        this.winInstance.src = "./img/YOUWINBIEN.jpg";
     },
 
     drawGameOver() {

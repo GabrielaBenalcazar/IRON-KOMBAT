@@ -12,7 +12,7 @@ class Impostor {
             x: this.gameSize.w - this.gameSize.w / 4,
             y: this.gameSize.h / 2,
         };
-        this.imSize = { w: this.gameSize.w / 5, h: this.gameSize.h / 2 };
+        this.imSize = { w: this.gameSize.w / 7, h: this.gameSize.h / 2 };
         this.drawImLiveSize = { w: this.gameSize.w / 4, h: 30 };
 
         this.vel = { x: 50, y: 160 };
@@ -25,7 +25,7 @@ class Impostor {
     }
     init() {
         this.imageInstance = new Image();
-        this.imageInstance.src = "../img/IMPOSTOR1.png";
+        this.imageInstance.src = "./img/IMPOSTOR (1).png";
     }
     draw() {
         this.ctx.drawImage(

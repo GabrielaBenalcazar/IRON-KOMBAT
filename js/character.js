@@ -62,7 +62,7 @@ class German extends Character {
     }
     init() {
         this.imageInstance = new Image();
-        this.imageInstance.src = "../img/GERMAN.png";
+        this.imageInstance.src = "./img/GERMAN (1).png";
         this.imageInstance.frames = 6;
         this.imageInstance.framesCha = 0;
 

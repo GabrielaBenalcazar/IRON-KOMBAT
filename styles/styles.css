@@ -7,7 +7,7 @@ body {
     display: flex;
     float: center;
     padding: 10px 0px;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .game-intro {
@@ -28,7 +28,7 @@ body {
 }
 
 #instrucciones {
-width: 650px;
+    width: 650px;
 }
 
 .arrows-img {
@@ -47,16 +47,11 @@ body button {
     box-shadow: 0;
     border-radius: 5px;
     margin-bottom: 20px;
-    
 }
 
 .background {
-    background-image: url("../img/IRONKOMBAT.jpg");
+    background-image: url("../img/FONDO2.jpg");
     background-size: cover;
 }
 
-#canvas {
-    background-image: url("../img/IRONKOMBAT.jpg");
-    background-size: cover;
-}
 
