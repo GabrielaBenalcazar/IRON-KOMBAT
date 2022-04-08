@@ -45,6 +45,7 @@ const controlledApp = {
 
         this.loadBackground();
         this.loadTikitiki();
+        this.loadOhRight();
         this.loadLifeImImages();
         this.loadLifeImages();
         this.instanceGameOver();
@@ -58,7 +59,11 @@ const controlledApp = {
     },
 
     loadTikitiki() {
-        this.tikitikiInstance = new Audio("./music/tikitiki1.mp3");
+        this.tikitikiInstance = new Audio("./music/tiki.mp3");
+    },
+
+    loadOhRight() {
+        this.ohRightInstance = new Audio("./music/ohrigth.mp3");
     },
 
     loadLifeImages() {
@@ -393,6 +398,7 @@ const controlledApp = {
 
         if (this.framesIndex % 50 === 0 && ranNum > 2 / 7) {
             this.impostor.shoot();
+            this.ohRigth();
         }
     },
 
@@ -433,6 +439,12 @@ const controlledApp = {
         this.tikitikiInstance.play();
         this.tikitikiInstance.loop = false;
         this.tikitikiInstance.volume = 1;
+    },
+
+    ohRigth() {
+        this.ohRightInstance.play();
+        this.ohRightInstance.loop = false;
+        this.ohRightInstance.volume = 1;
     },
 
     lifeUp() {
@@ -563,6 +575,7 @@ const controlledApp = {
             this.reset();
             clearInterval(this.intervalId);
             this.drawWinning();
+            // this.drawLiveCero();
         }
     },
 
@@ -584,6 +597,15 @@ const controlledApp = {
             this.gameSize.h
         );
     },
+    // drawLiveCero() {
+    //     this.ctx.drawImage(
+    //         this.lifeImImage0,
+    //         this.gameSize.w / 2 - 400,
+    //         0,
+    //         800,
+    //         200
+    //     );
+    // },
 
     drawWinning() {
         this.ctx.drawImage(
